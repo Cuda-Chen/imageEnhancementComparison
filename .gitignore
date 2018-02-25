@@ -30,3 +30,34 @@
 *.exe
 *.out
 *.app
+
+# build folder
+[Bb]uild/
+
+# CMake ignore
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
+# Visual Studio 2017 properties
+.vs/
+
+# Windows properties
+Thumbs.db
+
+# Mac OS X properties
+.DS_Store
+
+# do not track any BMP files except certain BMP format images
+*.bmp
+!miat.bmp
+!01_8bit.bmp
+!2_8bit.bmp
+!cameraman.bmp
+!house.bmp
+!jetplane.bmp
+!input.bmp
