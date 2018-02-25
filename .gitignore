@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+imageEnhancementComparison
 
 # build folder
 [Bb]uild/
