@@ -8,7 +8,7 @@ project(imageEnhancementComparison)
 set(EXECUTABLE_OUTPUT_PATH "..")
 set(CMAKE_BUILD_TYPE Debug)
 
-# find OpenCV
+# OpenCV library is required
 find_package(OpenCV REQUIRED)
 
 add_executable(imageEnhancementComparison main.cpp)
