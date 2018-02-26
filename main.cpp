@@ -9,7 +9,8 @@
 using namespace std;
 using namespace cv;
 
-int KERNEL_LENGTH = 3;
+// kernel length declare here
+int KERNEL_LENGTH = 0;
 // input image
 Mat src;
 // output result of mean(Homogeneous) filter, Gaussian filter, Median filter, and Bilateral filter, respectively
@@ -18,14 +19,30 @@ Mat dstGaussian;
 Mat dstMedian;
 Mat dstBilateral;
 
+string getFileName(const string &s)
+{
+	size_t i = s.rfind(".", s.length());
+	if(i != string::npos)
+	{
+		return (s.substr(0, i));
+	}
+
+	return ("");
+}
+
 int main(int argc, char ** argv)
 {
 	// input image
-	//const char *inputfile = argc >= 2 ? argv[1] : "miat.bmp";
-	string inputfile(argc >= 2 ? argv[1] : "miat.bmp");
+	string inputfile(argc >= 3 ? argv[1] : "miat.bmp");
+
+	// change kernel length here
+	KERNEL_LENGTH = argc >= 3 ? atoi(argv[2]) : 3;
 	
-	// output image
-	//const char *outputfile = argc >= 2 ? argv[2] : "result.bmp";
+	// output images' file name
+	string outputMean = getFileName(inputfile) + string("_mean_") + to_string(KERNEL_LENGTH) + string(".bmp");
+	string outputGaussian = getFileName(inputfile) + string("_Gaussian_") + to_string(KERNEL_LENGTH) + string(".bmp");
+	string outputMedian = getFileName(inputfile) + string("_median_") + to_string(KERNEL_LENGTH) + string(".bmp");
+	string outputBiateral = getFileName(inputfile) + string("_Biateral_") + to_string(KERNEL_LENGTH) + string(".bmp");
 	
 	// read input image 
 	src = imread(inputfile, CV_LOAD_IMAGE_UNCHANGED);
@@ -42,26 +59,26 @@ int main(int argc, char ** argv)
 	
 	// mean(Homogeneous) filter
 	blur(src, dstMean, Size(KERNEL_LENGTH, KERNEL_LENGTH));
-	namedWindow("mean filter", WINDOW_AUTOSIZE);
-	imshow("mean filter", dstMean);
+	namedWindow(outputMean, WINDOW_AUTOSIZE);
+	imshow(outputMean, dstMean);
 	waitKey(0);
 
 	// Gaussian filter
 	GaussianBlur(src, dstGaussian, Size(KERNEL_LENGTH, KERNEL_LENGTH), 0, 0);
-	namedWindow("Gaussian filter", WINDOW_AUTOSIZE);
-	imshow("Gaussian filter", dstGaussian);
+	namedWindow(outputGaussian, WINDOW_AUTOSIZE);
+	imshow(outputGaussian, dstGaussian);
 	waitKey(0);
 	
 	// Median filter
 	medianBlur(src, dstMedian, KERNEL_LENGTH);
-	namedWindow("median filter", WINDOW_AUTOSIZE);
-	imshow("median filter", dstMedian);
+	namedWindow(outputMedian, WINDOW_AUTOSIZE);
+	imshow(outputMedian, dstMedian);
 	waitKey(0);
 	
 	// Bilateral filter
 	bilateralFilter(src, dstBilateral, KERNEL_LENGTH, KERNEL_LENGTH * 2, KERNEL_LENGTH / 2);
-	namedWindow("bilateral filter", WINDOW_AUTOSIZE);
-	imshow("bilateral filter", dstBilateral);
+	namedWindow(outputBiateral, WINDOW_AUTOSIZE);
+	imshow(outputBiateral, dstBilateral);
 	waitKey(0);
 	
 	return 0;
