@@ -61,24 +61,28 @@ int main(int argc, char ** argv)
 	blur(src, dstMean, Size(KERNEL_LENGTH, KERNEL_LENGTH));
 	namedWindow(outputMean, WINDOW_AUTOSIZE);
 	imshow(outputMean, dstMean);
+	imwrite(outputMean, dstMean);
 	waitKey(0);
 
 	// Gaussian filter
 	GaussianBlur(src, dstGaussian, Size(KERNEL_LENGTH, KERNEL_LENGTH), 0, 0);
 	namedWindow(outputGaussian, WINDOW_AUTOSIZE);
 	imshow(outputGaussian, dstGaussian);
+	imwrite(outputGaussian, dstGaussian);
 	waitKey(0);
 	
 	// Median filter
 	medianBlur(src, dstMedian, KERNEL_LENGTH);
 	namedWindow(outputMedian, WINDOW_AUTOSIZE);
 	imshow(outputMedian, dstMedian);
+	imwrite(outputMedian, dstMedian);
 	waitKey(0);
 	
 	// Bilateral filter
 	bilateralFilter(src, dstBilateral, KERNEL_LENGTH, KERNEL_LENGTH * 2, KERNEL_LENGTH / 2);
 	namedWindow(outputBiateral, WINDOW_AUTOSIZE);
 	imshow(outputBiateral, dstBilateral);
+	imwrite(outputBiateral, dstBilateral);
 	waitKey(0);
 	
 	return 0;
