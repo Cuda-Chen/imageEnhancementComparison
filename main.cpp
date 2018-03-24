@@ -3,6 +3,7 @@
 
 // OpenCV properties
 #include "opencv2/imgproc.hpp"
+#include "opencv2/ximgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 
@@ -13,11 +14,12 @@ using namespace cv;
 int KERNEL_LENGTH = 0;
 // input image
 Mat src;
-// output result of mean(Homogeneous) filter, Gaussian filter, Median filter, and Bilateral filter, respectively
+// output result of mean(Homogeneous) filter, Gaussian filter, Median filter, Bilateral filter, and guided filter, respectively
 Mat dstMean;
 Mat dstGaussian;
 Mat dstMedian;
 Mat dstBilateral;
+Mat dstGuided;
 
 string getFileName(const string &s)
 {
@@ -32,17 +34,31 @@ string getFileName(const string &s)
 
 int main(int argc, char ** argv)
 {
+	// check input param number
+	if(argc != 4)
+	{
+		cout << "Usage: ./imageEnhancementComparison [input image name] [kernel size number] [guided filter image]" << endl;
+		return 1;
+	}
+
 	// input image
-	string inputfile(argc >= 3 ? argv[1] : "miat.bmp");
+	string inputfile(argv[1]);
 
 	// change kernel length here
-	KERNEL_LENGTH = argc >= 3 ? atoi(argv[2]) : 3;
+	KERNEL_LENGTH = atoi(argv[2]);
+
+	// set guided filter param here
+	string guideImage(argv[3]);
+	int r = 16;
+	double eps = 0.1 * 0.1;
+	Mat guide = imread(guideImage, CV_LOAD_IMAGE_UNCHANGED);
 	
 	// output images' file name
 	string outputMean = getFileName(inputfile) + string("_mean_") + to_string(KERNEL_LENGTH) + string(".bmp");
 	string outputGaussian = getFileName(inputfile) + string("_Gaussian_") + to_string(KERNEL_LENGTH) + string(".bmp");
 	string outputMedian = getFileName(inputfile) + string("_median_") + to_string(KERNEL_LENGTH) + string(".bmp");
 	string outputBiateral = getFileName(inputfile) + string("_Biateral_") + to_string(KERNEL_LENGTH) + string(".bmp");
+	string outputGuided = getFileName(inputfile) + string("_guided") + string(".bmp");
 	
 	// read input image 
 	src = imread(inputfile, CV_LOAD_IMAGE_UNCHANGED);
@@ -83,6 +99,13 @@ int main(int argc, char ** argv)
 	namedWindow(outputBiateral, WINDOW_AUTOSIZE);
 	imshow(outputBiateral, dstBilateral);
 	imwrite(outputBiateral, dstBilateral);
+	waitKey(0);
+
+	// guided filter
+	cv::ximgproc::guidedFilter(guide, src, dstGuided, r, eps);
+	namedWindow(outputGuided, WINDOW_AUTOSIZE);
+	imshow(outputGuided, dstGuided);
+	imwrite(outputGuided, dstGuided);
 	waitKey(0);
 	
 	return 0;

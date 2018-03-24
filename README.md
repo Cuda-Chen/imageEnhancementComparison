@@ -1,7 +1,7 @@
 # imageEnhancementComparison
 Image Enhancement Methods Comparison with OpenCV
 
-# How to Compile
+# How to Compile and Run
 Use CMake to compile
 ```shell=
 $ mkdir build
@@ -9,7 +9,7 @@ $ cd build
 $ cmake ..
 $ make
 $ cd ..
-$ ./imageEnhancementComparison
+$ ./imageEnhancementComparison [input file name] [kernel size number] [guided filter image]
 ```
 
 # Note
