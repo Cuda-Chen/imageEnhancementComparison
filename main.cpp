@@ -57,7 +57,7 @@ int main(int argc, char ** argv)
 	string outputMean = getFileName(inputfile) + string("_mean_") + to_string(KERNEL_LENGTH) + string(".bmp");
 	string outputGaussian = getFileName(inputfile) + string("_Gaussian_") + to_string(KERNEL_LENGTH) + string(".bmp");
 	string outputMedian = getFileName(inputfile) + string("_median_") + to_string(KERNEL_LENGTH) + string(".bmp");
-	string outputBiateral = getFileName(inputfile) + string("_Biateral_") + to_string(KERNEL_LENGTH) + string(".bmp");
+	string outputBiateral = getFileName(inputfile) + string("_bilateral_") + to_string(KERNEL_LENGTH) + string(".bmp");
 	string outputGuided = getFileName(inputfile) + string("_guided") + string(".bmp");
 	
 	// read input image 
